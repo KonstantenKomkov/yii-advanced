@@ -1,0 +1,4 @@
+php yii migrate/create create_user_table --fields="userId:primaryKey,name:string(255),middleName:string(255),surname:string(255),email:string(255),phone:string(12),createdAt:dateTime,updatedAt:dateTime"
+php yii migrate/create create_accessToken_table --fields="tokenId:primaryKey,userId:integer:notNull:foreignKey(user),accessToken:string(255),createdAt:dateTime,updatedAt:dateTime"
+php yii migrate/create create_post_table --fields="postId:primaryKey,title:string(255),text:text,userId:integer:notNull:foreignKey(user),createdAt:dateTime,updatedAt:dateTime"
+php yii migrate
