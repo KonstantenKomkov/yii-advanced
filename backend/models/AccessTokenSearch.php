@@ -1,15 +1,15 @@
 <?php
 
-namespace common\models;
+namespace backend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Post;
+use common\models\AccessToken;
 
 /**
- * PostSearch represents the model behind the search form of `common\models\Post`.
+ * AccessTokenSearch represents the model behind the search form of `common\models\AccessToken`.
  */
-class PostSearch extends Post
+class AccessTokenSearch extends AccessToken
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class PostSearch extends Post
     public function rules()
     {
         return [
-            [['postId', 'userId'], 'integer'],
-            [['title', 'text', 'createdAt', 'updatedAt'], 'safe'],
+            [['tokenId', 'userId'], 'integer'],
+            [['accessToken', 'createdAt', 'updatedAt'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class PostSearch extends Post
      */
     public function search($params)
     {
-        $query = Post::find();
+        $query = AccessToken::find();
 
         // add conditions that should always apply here
 
@@ -58,14 +58,13 @@ class PostSearch extends Post
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'postId' => $this->postId,
+            'tokenId' => $this->tokenId,
             'userId' => $this->userId,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'text', $this->text]);
+        $query->andFilterWhere(['like', 'accessToken', $this->accessToken]);
 
         return $dataProvider;
     }

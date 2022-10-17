@@ -1,15 +1,15 @@
 <?php
 
-namespace common\models;
+namespace backend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\AccessToken;
+use common\models\User;
 
 /**
- * AccessTokenSearch represents the model behind the search form of `common\models\AccessToken`.
+ * UserSearch represents the model behind the search form of `common\models\User`.
  */
-class AccessTokenSearch extends AccessToken
+class UserSearch extends User
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class AccessTokenSearch extends AccessToken
     public function rules()
     {
         return [
-            [['tokenId', 'userId'], 'integer'],
-            [['accessToken', 'createdAt', 'updatedAt'], 'safe'],
+            [['userId'], 'integer'],
+            [['name', 'middleName', 'surname', 'email', 'phone', 'createdAt', 'updatedAt'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class AccessTokenSearch extends AccessToken
      */
     public function search($params)
     {
-        $query = AccessToken::find();
+        $query = User::find();
 
         // add conditions that should always apply here
 
@@ -58,13 +58,16 @@ class AccessTokenSearch extends AccessToken
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'tokenId' => $this->tokenId,
             'userId' => $this->userId,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
         ]);
 
-        $query->andFilterWhere(['like', 'accessToken', $this->accessToken]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'middleName', $this->middleName])
+            ->andFilterWhere(['like', 'surname', $this->surname])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'phone', $this->phone]);
 
         return $dataProvider;
     }
